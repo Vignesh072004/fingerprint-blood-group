@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Fingerprint Blood Group Detection</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:linear-gradient(120deg,#eaf3ff,#ffffff);
+margin:0;
+text-align:center;
+}
+
+header{
+background:#0a6cf1;
+color:white;
+padding:20px;
+font-size:26px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.container{
+margin-top:50px;
+}
+
+.card{
+background:white;
+width:420px;
+margin:auto;
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+button{
+background:#0a6cf1;
+color:white;
+border:none;
+padding:12px 22px;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+background:#084db3;
+}
+
+.preview img{
+width:200px;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+.result{
+margin-top:25px;
+font-size:24px;
+font-weight:bold;
+color:#0a6cf1;
+}
+
+.scan{
+width:200px;
+height:200px;
+margin:auto;
+position:relative;
+}
+
+.scan-line{
+position:absolute;
+width:100%;
+height:4px;
+background:red;
+animation:scan 2s infinite;
+}
+
+@keyframes scan{
+0%{top:0;}
+100%{top:200px;}
+}
+
+.disclaimer{
+margin-top:20px;
+font-size:13px;
+color:red;
+}
+
+footer{
+margin-top:60px;
+background:#222;
+color:white;
+padding:15px;
+}
+
+</style>
+
+<script>
+
+function previewImage(event){
+
+let reader = new FileReader();
+
+reader.onload = function(){
+
+let preview = document.getElementById("preview");
+
+preview.src = reader.result;
+
+preview.style.display="block";
+
+document.getElementById("scan").style.display="block";
+
+}
+
+reader.readAsDataURL(event.target.files[0]);
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+Blood Group Detection System Using Fingerprints
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h3>Upload Fingerprint Image</h3>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input type="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+
+<br>
+
+<button type="submit">Predict Blood Group</button>
+
+</form>
+
+<div class="preview">
+
+<div class="scan" id="scan" style="display:none">
+
+<img id="preview" style="display:none">
+
+<div class="scan-line"></div>
+
+</div>
+
+</div>
+
+{% if prediction %}
+
+<div class="result">
+
+🩸 Predicted Blood Group : <b>{{ prediction }}</b>
+
+<br><br>
+
+ML Model Confidence : <b>{{ confidence }} %</b>
+
+</div>
+
+{% endif %}
+<p class="disclaimer">
+
+⚠ This prediction is for research purposes only.  
+
+</p>
+
+</div>
+
+</div>
+
+<footer>
+
+ML Research Project | Blood Group Detection Using Fingerprints
+
+</footer>
+
+</body>
+
+</html>
